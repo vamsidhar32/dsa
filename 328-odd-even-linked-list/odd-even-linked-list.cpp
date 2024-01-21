@@ -11,6 +11,10 @@
 class Solution {
 public:
     ListNode* oddEvenList(ListNode* head) {
+
+        if(head == NULL || head->next == NULL){
+            return head ;
+        }
         ListNode* dummyeven = new ListNode(-1);
         ListNode* even = dummyeven;
         ListNode* dummyodd  = new ListNode(-1);
