@@ -18,9 +18,9 @@ private:
         if(ans.size() == level){
             ans.push_back(root->val);
         }
-        level++ ;
-        preorder(root->right,ans,level);
-        preorder(root->left,ans,level);
+        
+        preorder(root->right,ans,level+1);
+        preorder(root->left,ans,level+1);
     }
 public:
     vector<int> rightSideView(TreeNode* root) {
