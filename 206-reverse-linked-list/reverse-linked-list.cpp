@@ -17,10 +17,16 @@ public:
             st.push(temp->val);
             temp = temp->next;
         }
+
+        // while(!st.empty()){
+        //     cout<< st.top()->val  << " " ;
+        //     st.pop();
+        // }
         temp = head ;
 
         while(temp){
-            temp->val = st.top();
+            cout<< st.top() << " " ;
+            temp->val = st.top() ;
             st.pop();
             temp = temp->next ;
         }
