@@ -23,7 +23,7 @@ public:
                     if(mpp[s[i]] == 1) flag = 0 ;
                     i++;
                 }
-                j++;
+                mpp[s[j]]--;
             }
 
 
