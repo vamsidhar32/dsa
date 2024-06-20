@@ -68,21 +68,21 @@ public:
         //     cout << ngli[i] << " "  <<endl;
         // }
 
-        long long answer = 0 ;
+        long long sum = 0 ;
         for(int i = 0 ; i <arr.size(); i++){
 
             int l = (i- ngli[i] )% mod;
             int r = (ngri[i] - i) % mod ;
 
             //cout << l << " " << r << " " ;
-            //sum = sum + arr[i] *l*r % mod ; 
+            sum = (long)(sum) % mod + (long)(arr[i]) % mod * (long)(l) % mod * (long)(r) % mod ; 
             //cout<<sum << " " << endl ;
 
-            answer += (long) (l) * (r) % mod * arr[i] % mod;
-            answer %= mod;
+            //answer += (long) (l) * (r) % mod * arr[i] % mod;
+            sum %= mod;
 
         }
-        return answer ;
+        return sum ;
 
     }
     
