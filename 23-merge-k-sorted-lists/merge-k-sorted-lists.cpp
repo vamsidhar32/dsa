@@ -10,52 +10,34 @@
  */
 class Solution {
 public:
-    ListNode* merge(ListNode* list1,ListNode* list2){
-
-        //if(list1 == NULL || list2 == NULL) return NULL ;
-        ListNode* dummy  = new ListNode(-10000004);
-        ListNode* ans =  dummy ;
-
-        while(list1 && list2){
-            if(list1->val <= list2->val){
-                dummy->next = list1;
-                dummy = dummy->next;
-
-                list1 = list1->next;     
+    class customcomp{
+        public:
+            bool operator() (ListNode* a , ListNode* b){
+                return (a->val > b->val) ;
             }
+        };
 
-            else if(list2->val < list1->val){
-                dummy->next = list2;
-                dummy = dummy->next ;
-
-                list2 = list2->next; 
-            }
-
-        }
-        if(list1) dummy->next = list1; 
-        if(list2) dummy->next = list2;
-
-        //dummy->next = NULL ;
-
-        ListNode* temp = ans->next ;
-        ans->next = NULL ;
-        delete ans;
-        return temp;
-
-    }
     ListNode* mergeKLists(vector<ListNode*>& lists) {
-
         ListNode* dummy = new ListNode(-10000007);
         ListNode* ans = dummy ;
-        for(int i = 0 ; i < lists.size(); i++){
-            dummy = merge(dummy,lists[i]);
-        }
-        
-        ListNode* temp = ans->next ;
 
-        ans->next = NULL ;
-        delete ans ;
-        return temp;
-        
+
+        priority_queue<ListNode*,vector<ListNode*>,customcomp>pq;
+
+        for(int i = 0 ; i <lists.size(); i++){
+            if(lists[i]) pq.push(lists[i]);
+        }
+
+        while(!pq.empty()){
+
+            ListNode* top = pq.top();
+            pq.pop();
+
+            dummy->next = top;
+            dummy = dummy->next ;
+            if(top->next) pq.push(top->next);
+        }
+
+        return ans->next ;
     }
 };
