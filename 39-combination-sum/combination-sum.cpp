@@ -1,9 +1,9 @@
 class Solution {
 public:
-    void func(int index,int &temp ,vector<int>&temp2 ,set<vector<int>>&ans , vector<int> &candidates,int target){
+    void func(int index,int &temp ,vector<int>&temp2 ,vector<vector<int>>&ans , vector<int> &candidates,int target){
         if(target<0) return ;
         if(index == candidates.size()) {
-            if(target == 0) ans.insert(temp2);
+            if(target == 0) ans.push_back(temp2);
             return ;
         }
 
@@ -20,7 +20,7 @@ public:
     vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
         int n = candidates.size();
         
-        set<vector<int>>ans;
+        vector<vector<int>>ans;
         vector<int>temp2 ;
         int temp = 0;
         func(0,temp ,temp2,ans,candidates,target);
@@ -30,7 +30,7 @@ public:
             mainans.push_back(it);
         }
 
-        return mainans;
+        return ans;
 
     }
 };
