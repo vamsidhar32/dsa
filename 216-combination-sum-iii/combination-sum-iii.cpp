@@ -8,11 +8,11 @@ public:
         }
 
         for(int i = index ; i < nums.size(); i++){
-            sum += nums[i];
-            temp.push_back(nums[i]);
+            sum += i+1;
+            temp.push_back(i+1);
             func(i+1,sum,temp,ans,k,n,nums);
             temp.pop_back();
-            sum-= nums[i];
+            sum-= i+1;
         }
     }
     vector<vector<int>> combinationSum3(int k, int n) {
