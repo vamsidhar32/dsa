@@ -8,68 +8,80 @@
  * };
  */
 class Solution {
-    private:
-    void bfsparent(TreeNode* root , unordered_map<TreeNode*,TreeNode*> &parents){
-        queue<TreeNode*> q;
-        q.push(root);
+public:
+    void solveparents(unordered_map<TreeNode*,TreeNode*> &parent,TreeNode*root){
 
+        if(root == NULL) return ;
+        queue<TreeNode*>q;
+        q.push(root);
+        parent[root] = NULL ;
         while(!q.empty()){
             int size = q.size();
-            while(size--){
+
+            for(int i = 0; i <size; i++){
                 TreeNode* node = q.front();
                 q.pop();
                 if(node->left){
+                    parent[node->left] = node;
                     q.push(node->left);
-                    parents[node->left] = node ;
                 }
                 if(node->right){
+                    parent[node->right] = node;
                     q.push(node->right);
-                    parents[node->right] = node ;
                 }
+
             }
         }
-    }    
-public:
+
+    }
     vector<int> distanceK(TreeNode* root, TreeNode* target, int k) {
-        vector<int> ans ;
-        unordered_map<TreeNode*,TreeNode*>parents;
-        
-        unordered_set<TreeNode*> s ;
+        vector<int>ans ;
+        if(root == NULL) return ans;
+        unordered_map<TreeNode*,TreeNode*>parent;
+        solveparents(parent,root);
 
-        bfsparent(root,parents);
-        queue<TreeNode*>q ;
+       
+        unordered_map<TreeNode*,bool>visited;
 
+        queue<TreeNode*>q;
         q.push(target);
-        s.insert(target);
-        
-        while(k--){
+
+        visited[target] = true;
+        int level = 0 ;
+
+        while(!q.empty()){
             int size = q.size();
-            while(size--){
+            level++;
+
+            if(level == k+1) break;
+
+            for(int i = 0 ; i <size ; i++){
                 TreeNode* node = q.front();
                 q.pop();
-                if(node->left && s.find(node->left) == s.end()){
+
+                if(node->left && !visited[node->left]){
                     q.push(node->left);
-                    s.insert(node->left);
-                }
-                if(node->right && s.find(node->right) == s.end()){
-                    q.push(node->right);
-                    s.insert(node->right);
-                } 
-                if(parents[node] && s.find(parents[node]) == s.end() ){
-                    q.push(parents[node]);
-                    s.insert(parents[node]);
+                    visited[node->left] = true;
                 }
 
+                if(node->right && !visited[node->right]){
+                    q.push(node->right);
+                    visited[node->right] = true ;
+                }
+                if(parent[node] && !visited[parent[node]]){
+                    q.push(parent[node]);
+                    visited[parent[node]] = true ;
+                }
             }
+            
         }
 
         while(!q.empty()){
             ans.push_back(q.front()->val);
             q.pop();
-
         }
+
         return ans ;
 
-        
     }
 };
