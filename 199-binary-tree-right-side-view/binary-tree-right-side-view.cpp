@@ -10,24 +10,26 @@
  * };
  */
 class Solution {
-private:
-    void preorder(TreeNode* root , vector<int> &ans,int level){
-        if(root == NULL){
-            return ;
-        }
-        if(ans.size() == level){
-            ans.push_back(root->val);
-        }
-        
-        preorder(root->right,ans,level+1);
-        preorder(root->left,ans,level+1);
-    }
 public:
     vector<int> rightSideView(TreeNode* root) {
         vector<int>ans;
-        int level = 0 ;
-        preorder(root,ans,level);
+        if(root == NULL) return ans;
+
+        queue<pair<TreeNode*,int>> q;
+        q.push({root,0});
+        int flag = 1 ;
+        while(!q.empty()){
+            int s = q.size();
+            for(int i = 0 ; i <s ; i++){
+                pair<TreeNode*,int>p = q.front();
+                q.pop();
+                if(flag == 1){ans.push_back(p.first->val);flag = 0 ;}
+                if(p.first->right) q.push({p.first->right,p.second+1});
+                if(p.first->left) q.push({p.first->left,p.second+1});  
+            }
+            flag = 1 ;
+        }
+
         return ans ;
-        
     }
 };
