@@ -10,21 +10,23 @@
  * };
  */
 class Solution {
-private:
-    bool preorder(TreeNode* leftt , TreeNode* rightt){
-        if(leftt == NULL || rightt == NULL){
-            return leftt == rightt ;
-        }
-        if(leftt->val != rightt->val) return false ;
-        bool a = preorder(leftt->left ,rightt->right);
-        bool b = preorder(leftt->right, rightt->left);
-        return a && b ;
-        
-    }
 public:
+    bool issyym(TreeNode* root1,TreeNode* root2){
+        if(root1 == NULL || root2 == NULL) return root1 == root2;
+
+        if(root1->val != root2->val) return false ;
+        bool left = issyym(root1->left,root2->right);
+        if(left == false )return false ;
+        bool right = issyym(root1->right,root2->left);
+        if(right == false ) return false ;
+
+        return true ;
+    }
     bool isSymmetric(TreeNode* root) {
-        if(root == NULL) return true ;
-        bool ans = preorder(root->left, root->right);
-        return ans ;
+        if(root == NULL) return false;
+        if(root->left == NULL || root->right == NULL) return root->left == root->right ;
+        
+        bool k = issyym(root->left,root->right);
+        return k;
     }
 };
