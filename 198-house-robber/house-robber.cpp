@@ -16,9 +16,20 @@ public:
         return dp[ind] = max(left,right);
     }
     int rob(vector<int>& nums) {
-        int n = nums.size();
-        vector<int>dp(n+1,-1);
 
-        return rob(nums,n-1,dp);
+        int n = nums.size();
+        if(n ==0 ) return 0 ;
+        if(n == 1) return nums[0];
+        vector<int>dp(n+1,-1);
+        dp[0] = nums[0];
+        dp[1] = max(nums[1],nums[0]);
+        for(int i = 2 ; i <n ; i++){
+            int left = nums[i] + dp[i-2];
+            int right = dp[i-1];
+
+            dp[i] = max(left,right);
+        }
+
+        return dp[n-1];
     }
 };
