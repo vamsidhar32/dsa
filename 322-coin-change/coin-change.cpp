@@ -23,7 +23,22 @@ public:
         if(amount == 0) return 0 ;
         vector<vector<int>>dp(n,vector<int>(amount+1,-1));
 
-        if(coindp(n-1,coins,amount,dp) == 1e9) return -1;
-        return coindp(n-1,coins,amount,dp);
+        for(int amo = 0 ; amo <= amount ; amo++){
+            if(amo%coins[0] == 0) dp[0][amo] = amo/coins[0];
+            else dp[0][amo] = 1e9;
+        }
+
+        for(int ind = 1 ; ind <n ;ind++){
+            for(int amo = 0 ; amo <=amount ; amo++){
+                int nottake = dp[ind-1][amo];
+
+                int take = 1e9;
+                if(coins[ind] <= amo) take = 1+ dp[ind][amo-coins[ind]];
+
+                dp[ind][amo] = min(take,nottake);
+            }
+        }
+        if(dp[n-1][amount] == 1e9) return -1;
+        return dp[n-1][amount];
     }
 };
