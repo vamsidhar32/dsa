@@ -29,11 +29,14 @@ public:
 
         vector<vector<int>>dp(n,vector<int>(sum+1,-1));
         //return finddp(n-1,sum,nums,dp);
+
+        vector<int>prev(sum+1,-1);
+        vector<int>curr(sum+1,-1);
         for(int T= 0 ; T<= sum ;T++){
             int k = 0;
             if(T == nums[0]) k++ ; //takecase ;
             if(T == 0)  k++ ; //nottakecase;
-            dp[0][T] = k ;
+            prev[T] = k ;
             
         }
 
@@ -41,15 +44,16 @@ public:
             for(int T = 0 ; T<=sum; T++){
                 
                 int take = 0;
-                if(nums[ind] <= T) take = dp[ind-1][T-nums[ind]];
+                if(nums[ind] <= T) take = prev[T-nums[ind]];
 
-                int nottake = dp[ind-1][T];
+                int nottake = prev[T];
 
-                dp[ind][T] = take +nottake;
+                curr[T] = take +nottake;
             }
+            prev = curr;
         }
 
-        return dp[n-1][sum];
+        return prev[sum];
 
     }
 };
