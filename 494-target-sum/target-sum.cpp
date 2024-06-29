@@ -25,9 +25,31 @@ public:
 
         if((totalsum+target)% 2 == 1) return 0 ;
         if(abs(target) > totalsum) return 0 ;
-        int T = (target+totalsum)/2;
+        int sum = (target+totalsum)/2;
 
-        vector<vector<int>>dp(n,vector<int>(T+1,-1));
-        return finddp(n-1,T,nums,dp);
+        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
+        //return finddp(n-1,sum,nums,dp);
+        for(int T= 0 ; T<= sum ;T++){
+            int k = 0;
+            if(T == nums[0]) k++ ; //takecase ;
+            if(T == 0)  k++ ; //nottakecase;
+            dp[0][T] = k ;
+            
+        }
+
+        for(int ind = 1 ; ind <n; ind++){
+            for(int T = 0 ; T<=sum; T++){
+                
+                int take = 0;
+                if(nums[ind] <= T) take = dp[ind-1][T-nums[ind]];
+
+                int nottake = dp[ind-1][T];
+
+                dp[ind][T] = take +nottake;
+            }
+        }
+
+        return dp[n-1][sum];
+
     }
 };
