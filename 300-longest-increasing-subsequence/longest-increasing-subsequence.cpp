@@ -27,7 +27,7 @@ public:
 
 
         for(int ind = n-1 ; ind >=0 ; ind--){
-        for(int prev = 0 ; prev < n ; prev++){
+        for(int prev = 0 ; prev < ind+1 ; prev++){
             int take = 0;
             if(prev == 0 || nums[prev-1] < nums[ind]){
 
