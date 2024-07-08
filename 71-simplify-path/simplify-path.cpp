@@ -1,7 +1,9 @@
 class Solution {
 public:
     string simplifyPath(string path) {
-        vector<string> dir;
+        //vector<string> dir;
+        
+        string ans = "";
 
         stringstream obj(path);
         string temp;
@@ -11,15 +13,23 @@ public:
                 continue;
             }
             else if(temp == ".."){
-                if(dir.size()) dir.pop_back();
+                if(ans.size()){
+                    for(int i = ans.size()-1; i >=0; i--){
+                        if(ans[i] == '/'){
+                            ans.pop_back();
+                            break;
+                        }
+                        ans.pop_back();
+                    }
+                }
             }
-            else dir.push_back(temp);
+            else{
+                ans = ans+"/"+ temp;
+            }
         }
-        string ans = "";
         
-        for(auto it : dir){
-            ans = ans + "/" + it;
-        }
+        
+        
         return ans.size() == 0 ? "/" : ans;
     }
 };
