@@ -20,7 +20,7 @@ public:
             pq.pop();
             
             int stops = it.first ;
-            if(stops == k+1) break;
+            if(stops == k+1) continue;
             int dist = it.second.first;
             int node = it.second.second;
 
