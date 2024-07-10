@@ -12,14 +12,15 @@ public:
                 if(nums[j] < nums[i] && 1+dp[j] > dp[i]){
                     dp[i] = 1+dp[j];
                     hash[i] = j ;
-                    if(dp[i] > ans ){
+                    
+                    
+                }
+            }
+            if(dp[i] > ans ){
                         ans = dp[i];
                         ind = i ;
                         //cout << ind << "*";
                     }
-                    
-                }
-            }
         }
         // int index = -1 ;
 
