@@ -1,45 +1,55 @@
 class Solution {
 public:
+    typedef pair<int,int> pii;
     int findTheCity(int n, vector<vector<int>>& edges, int distanceThreshold) {
-        vector<vector<int>> matrix(n,vector<int>(n,1e8));
-        for(int i = 0 ; i < n ; i++){
+
+        vector<pii> adj[n];
+        for(auto it : edges){
+            adj[it[0]].push_back({it[1],it[2]});
+            adj[it[1]].push_back({it[0],it[2]});
+        }
+        vector<vector<int>>matrix (n,vector<int>(n,1e8));
+        for(int i =0 ; i <n ; i++){
             matrix[i][i] = 0;
         }
-        for(auto it :edges){
-            int node1 = it[0];
-            int node2 = it[1];
-            int wt = it[2];
-            matrix[node1][node2] = wt;
-            matrix[node2][node1] = wt;
-        }
+        priority_queue<pii,vector<pii>,greater<pii>>pq;
+        for(int i = 0 ; i < n ; i++){
+            pq.push({0,i});
 
-        for(int via = 0 ; via <n ; via++){
-        for(int i = 0 ; i <n ; i++){
-            for(int j = 0 ; j<n; j++){
-                if(matrix[i][via] != 1e8 && matrix[via][j] != 1e8){
-                    if(matrix[i][via] + matrix[via][j] < matrix[i][j]){
-                        matrix[i][j] = matrix[i][via] + matrix[j][via];
+            while(!pq.empty()){
+                pii top = pq.top();
+                pq.pop();
+                int dist = top.first ;
+                int node = top.second;
+
+                for(auto it : adj[node]){
+                    int adjnode = it.first ;
+                    int wt = it.second;
+                    if(dist + wt < matrix[i][adjnode]){
+                        matrix[i][adjnode] = dist+wt;
+                        pq.push({dist+wt,adjnode});
                     }
                 }
             }
         }
-        }
-
         int city = -1 ;
         int mincities = n+1;
-        for(int i =0 ; i < n ; i++){
-            int nucities=0 ;
+        for(int i=0 ; i <n ; i++){
+            int count = 0 ;
             for(int j = 0 ; j < n ; j++){
                 if(matrix[i][j] <= distanceThreshold){
-                    nucities++;
+                    count++;
                 }
             }
-            if(nucities <= mincities){
-                mincities = nucities;
+
+            if(count <= mincities){
+                mincities = count ; 
                 city = i ;
-            } 
+            }
         }
-        return city;
+
+        return city ;
+
 
     }
 };
