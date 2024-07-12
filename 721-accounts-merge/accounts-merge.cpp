@@ -64,8 +64,10 @@ public:
 
         vector<vector<string>>ans;
         for(int i = 0 ; i< n; i++){
-            vector<string>st;
             if(acc[i].size() == 0) continue;
+
+
+            vector<string>st;
             st.push_back(accounts[i][0]);
             for(int j =0 ; j < acc[i].size(); j++){
                 st.push_back(acc[i][j]);
