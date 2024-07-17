@@ -15,7 +15,7 @@ public:
                 else return false ;
             }
         }
-        if(st.size() !=1) return false ;
+        if(st.size() != 1) return false ;
         return true ;
     }
 };
