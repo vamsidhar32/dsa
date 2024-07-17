@@ -1,8 +1,8 @@
 class Solution {
 public:
     int singleNonDuplicate(vector<int>& nums) {
-        int low = 0 ; 
-        int high = nums.size()-1;
+        int low = 1 ; 
+        int high = nums.size()-2;
         int n = nums.size();
         if(n==1) return nums[0];
 
