@@ -1,89 +1,75 @@
 class Solution {
 public:
+
     #define mod 1000000007
-    void func1(vector<int> &ans, vector<int>&arr){
+    void func1(vector<int> &arr, vector<int>&nsil){
         stack<pair<int,int>>st;
-
-        for(int i = arr.size()-1; i>=0; i--){
+        for(int i = 0 ; i < arr.size() ; i++){
             if(st.empty()){
-                ans.push_back(arr.size());
-                st.push({arr[i],i});
-            }
-            else if(arr[i] >= st.top().first){
-                ans.push_back(st.top().second);
-                st.push({arr[i],i});
-            }
-            else{
-                while(!st.empty() && arr[i] < st.top().first){
-                    st.pop();
-                }
-                if(st.empty()) ans.push_back(arr.size());
-                else ans.push_back(st.top().second);
-                st.push({arr[i],i});
-            }
-
-        }
-        reverse(ans.begin(),ans.end());
-
-    }
-
-
-
-
-    void func2(vector<int> &ans, vector<int>&arr){
-        stack<pair<int,int>>st;
-
-        for(int i = 0; i <arr.size(); i++){
-            if(st.empty()){
-                ans.push_back(-1);
+                nsil.push_back(-1);
                 st.push({arr[i],i});
             }
             else if(arr[i] > st.top().first){
-                ans.push_back(st.top().second);
+                nsil.push_back(st.top().second);
                 st.push({arr[i],i});
             }
+
             else{
-                while(!st.empty() && arr[i] <= st.top().first){
+                while( !st.empty() && arr[i] < st.top().first){
                     st.pop();
                 }
-                if(st.empty()) ans.push_back(-1);
-                else ans.push_back(st.top().second);
+                if(st.empty()) nsil.push_back(-1);
+                else nsil.push_back(st.top().second);
+                st.push({arr[i],i});
+            }
+        }
+    }
+
+    void func2(vector<int> &arr,vector<int>&nsir){
+        stack<pair<int,int>>st;
+        for(int i = arr.size()-1 ; i >= 0 ; i--){
+            if(st.empty()){
+                nsir.push_back(arr.size());
+                st.push({arr[i],i});
+            }
+            else if(arr[i] > st.top().first){
+                nsir.push_back(st.top().second);
                 st.push({arr[i],i});
             }
 
+            else{
+                while( !st.empty() && arr[i] <= st.top().first){
+                    st.pop();
+                }
+                if(st.empty()) nsir.push_back(arr.size());
+                else nsir.push_back(st.top().second);
+                st.push({arr[i],i});
+            }
         }
+        reverse(nsir.begin(),nsir.end());
     }
-
-
     int sumSubarrayMins(vector<int>& arr) {
-        vector<int>ngli;
-        vector<int>ngri;
+        int sum  = 0 ; 
+        
 
-        func1(ngri,arr);
-        func2(ngli,arr);
-        // for(int i = 0 ; i <arr.size(); i++){
-        //     cout << ngri[i] << " "  <<endl;
-        // }
-        // for(int i = 0 ; i <arr.size(); i++){
-        //     cout << ngli[i] << " "  <<endl;
-        // }
+        vector<int>nsil ;
+        vector<int>nsir ;
+        func1(arr,nsil);
+        func2(arr,nsir);
 
-        long long sum = 0 ;
-        for(int i = 0 ; i <arr.size(); i++){
 
-            int l = (i- ngli[i] )% mod;
-            int r = (ngri[i] - i) % mod ;
+        for(int i = 0 ; i < arr.size() ; i++){
+            cout << nsir[i] << " ";
+        }
+        for(int i = 0 ; i< arr.size();  i++){
+            int l = i - nsil[i];
+            int r = nsir[i] - i ;
 
-            //cout << l << " " << r << " " ;
-            sum = (long)(sum) % mod + (long)(arr[i]) % mod * (long)(l) % mod * (long)(r) % mod ; 
-            //cout<<sum << " " << endl ;
+            sum = (long long)(sum % mod) + (long long)((arr[i] %mod ) * (long long)((l%mod) *  (long long)(r %mod))%mod )% mod;
 
-            //answer += (long) (l) * (r) % mod * arr[i] % mod;
-            sum %= mod;
 
+            
         }
         return sum ;
-
     }
-    
 };
