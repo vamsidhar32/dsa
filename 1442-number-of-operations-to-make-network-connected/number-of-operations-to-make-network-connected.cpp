@@ -56,7 +56,7 @@ public:
             if(ds.findupar(i) == i) comp++;
         }
 
-        if(extraedges < 0 ) return -1 ;
+        if( count  < comp-1 ) return -1 ;
         return comp-1;
     }
 };
