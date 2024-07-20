@@ -15,16 +15,15 @@ public:
         return dp[i][j] = left+right ;
     }
     int uniquePaths(int m, int n) {
-        
+
         vector<vector<int>>dp(m,vector<int>(n,1));
+
+
+
         dp[m-1][n-1] = 1 ;
-
-        
-
-
-        for(int i = n-2 ; i>=0; i--){
-            for(int j = m-2;j >=0 ;j--){
-                dp[j][i] = dp[j][i+1] + dp[j+1][i]; 
+        for(int i = m-2 ; i>=0; i--){
+            for(int j = n-2;j >=0 ;j--){
+                dp[i][j] = dp[i+1][j] + dp[i][j+1]; 
             }
         }
 
