@@ -24,6 +24,7 @@ public:
             }
             if(curr == NULL){
                 if(st.empty()) break;
+                
                 if(st.top()->right == NULL){
                     TreeNode* node = st.top();
                     ans.push_back(st.top()->val);
