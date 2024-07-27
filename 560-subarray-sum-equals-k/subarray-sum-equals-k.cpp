@@ -9,10 +9,9 @@ public:
         for(int i = 0 ; i < n ; i++){
             presum += nums[i] ;
 
-            int rem = presum - k ; 
-            
-
-            count += mpp[rem];
+            if(mpp.find(presum-k) != mpp.end()){
+                count += mpp[presum-k];
+            }
 
             mpp[presum]++;
         }
