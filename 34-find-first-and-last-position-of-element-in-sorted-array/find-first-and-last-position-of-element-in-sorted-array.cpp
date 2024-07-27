@@ -9,7 +9,6 @@ public:
         int ub = lb;
         while(ub < n- 1 && nums[ub] == nums[ub+1]){
             ub = ub+1;
-            if(ub == n-1) break;
         }
 
         return {lb,ub};
