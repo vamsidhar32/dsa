@@ -4,32 +4,30 @@ public:
         int n = s.size();
         int i = 0 ; 
         int j = 0 ;
-        int flag =0;
+        unordered_map<char,int>mpp;
+        int flag = 0 ;
+
         int ans = 0 ;
-        map<char,int>mpp;
-
-        while(j<n){
+        while( j < n){
             mpp[s[j]]++;
-            if(mpp[s[j]] == 2) flag = 1 ;
-
+            if(mpp[s[j]] ==2) flag = 1 ;
+            
             if(flag == 0){
-                ans = max(j-i+1,ans);
+                ans = max(ans,j-i+1);
                 j++;
-            }
-            else if(flag == 1){
-
+            } 
+            else if(flag  ==1){
                 while(flag == 1){
                     mpp[s[i]]--;
-                    if(mpp[s[i]] == 1) flag = 0 ;
+                    if(mpp[s[i]] == 1) flag = 0;
                     i++;
                 }
-                mpp[s[j]]--;
+                j++;
             }
 
 
         }
 
         return ans ;
-        
     }
 };
