@@ -21,7 +21,7 @@ public:
                     sum = sum-nums[i];
                     i++;
                 }
-                if(sum <= goal)count = count + (j-i+1);
+                count = count + (j-i+1);
                 j++;
             }
         }
