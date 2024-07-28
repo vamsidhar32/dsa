@@ -29,12 +29,9 @@ public:
                 maxcount = mpp[s[j]];
             }
 
-            if((count - maxcount) <=k){
-                ans = max(ans,j-i+1);
-                j++;
-            }
+            
 
-            else if((count - maxcount) >k ){
+            
                 while((count - maxcount) > k){
 
                     
@@ -45,8 +42,14 @@ public:
                     i++;
 
                 }
+                
+
+
+                if((count - maxcount) <=k){
+                ans = max(ans,j-i+1);
                 j++;
-            }
+                }
+            
 
         }
 
