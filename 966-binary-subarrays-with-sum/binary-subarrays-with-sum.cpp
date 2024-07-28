@@ -2,6 +2,7 @@ class Solution {
 public:
 
     int atmostgoal(vector<int>nums,int goal){
+        if(goal == -1) return 0 ;
         int i =0 ; 
         int j =0 ; 
         int n = nums.size();
@@ -16,7 +17,7 @@ public:
             }
 
             else if(sum >goal){
-                while(sum > goal && i <= j){
+                while(sum > goal ){
                     sum = sum-nums[i];
                     i++;
                 }
