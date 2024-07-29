@@ -15,8 +15,8 @@ public:
         vector<int>ans;
 
         stack<TreeNode*>st;
-        TreeNode* temp = root ;
-        TreeNode* curr = temp ;
+        //TreeNode* temp = root ;
+        TreeNode* curr = root ;
         while(true){
             while(curr){
                 st.push(curr);
