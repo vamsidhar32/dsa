@@ -12,25 +12,14 @@ class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
         ListNode* temp = head ;
-        stack<int>st ;
+        ListNode* prev = NULL;
         while(temp){
-            st.push(temp->val);
-            temp = temp->next;
-        }
-
-        // while(!st.empty()){
-        //     cout<< st.top()->val  << " " ;
-        //     st.pop();
-        // }
-        temp = head ;
-
-        while(temp){
-            cout<< st.top() << " " ;
-            temp->val = st.top() ;
-            st.pop();
+            ListNode* var = temp ;
             temp = temp->next ;
+            var->next = prev ;
+            prev = var ;
         }
 
-        return head;
+        return prev;
     }
 };
