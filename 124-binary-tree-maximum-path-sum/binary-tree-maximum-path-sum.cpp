@@ -11,30 +11,26 @@
  */
 class Solution {
 public:
-    int height(TreeNode* root ,int &pathsum){
-        if(root == NULL) return 0;
-
+    int height(TreeNode* root , int &pathsum){
+        if(root == NULL) return NULL ;
 
         int left = height(root->left,pathsum);
-        
         int right = height(root->right,pathsum);
-        
 
-        // if(left <0 && right <0 && root->val <0){
-        //     pathsum = max(pathsum,left+right+root->val);
-        //     return (min(root->val,min(left,right)));
-        // }
-        if(left <0) left = 0 ;
-        if(right <0) right = 0 ;
+        if(left < 0) left = 0 ;
+        if(right <0) right = 0;
 
-        pathsum = max(pathsum,left+right+root->val);
-        
+        pathsum = max(pathsum,root->val+left+right);
 
-        return (root->val+max(left,right));
+        return (root->val + max(left,right));
+
     }
     int maxPathSum(TreeNode* root) {
-        int pathsum = INT_MIN;
+        int pathsum  = INT_MIN ;
+
         int hei = height(root,pathsum);
+
         return pathsum ;
+        
     }
 };
