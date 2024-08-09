@@ -30,13 +30,14 @@ public:
 
                 //if(dp[i][j] != -1) return dp[i][j];
                 int left = INT_MAX;
-                if(i+1 <= n-1) left = triangle[i][j] + mindp(i+1,j,n,triangle,dp);
+                if(i+1 <= n-1) left = triangle[i][j] + dp[i+1][j];
                 int right = INT_MAX;
-                if(i+1 <= n-1) right = triangle[i][j] + mindp(i+1,j+1,n,triangle,dp);
+                if(i+1 <= n-1) right = triangle[i][j] + dp[i+1][j+1];
 
 
-                return dp[i][j] = min(left,right);
+                dp[i][j] = min(left,right);
             }
         }
+        return dp[0][0];
     }
 };
