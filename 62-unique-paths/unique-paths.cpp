@@ -18,6 +18,9 @@ public:
 
         vector<vector<int>> dp (m+1,vector<int>(n+1,-1));
 
+
+        vector<int>prev(n+1,-1);
+        vector<int>curr(n+1,-1);
         //return uniquedp(0,0,m,n,dp);
 
         for(int i = m-1 ; i >= 0 ; i--){
@@ -26,15 +29,16 @@ public:
 
                 //if(dp[i][j] != -1) return dp[i][j];
                 int left = 0 ; 
-                if(i+1 < m) left = dp[i+1][j];
+                if(i+1 < m) left = prev[j];
 
                 int right = 0 ;
-                if(j+1 <n) right = dp[i][j+1];
+                if(j+1 <n) right = curr[j+1];
 
-                dp[i][j] = left+right ;
+                curr[j] = left+right ;
             }
+            prev = curr ;
         }
 
-        return dp[0][0];
+        return -prev[0];
     }
 };
