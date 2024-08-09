@@ -22,19 +22,24 @@ public:
         int n = matrix.size();
         vector<vector<int>>dp(n,vector<int>(n,-1));
 
-        for(int i = 0 ; i<n; i++){
-            dp[n-1][i] = matrix[n-1][i];
-        }
 
-        for(int i = n-2 ; i>=0 ;i--){
-            for(int j = 0 ; j <n ;j++){
-                int minn = INT_MAX;
-                for(int k = -1 ; k <=1 ;k++){
-                    if(j+k >=0 && j+k <n){
-                        minn = min(minn,dp[i+1][j+k]);
-                    }
-                }
-                dp[i][j] = matrix[i][j] + minn;
+        for(int i = n-1 ; i >=0 ; i--){
+            for(int j = 0 ; j <= n-1 ; j++){
+                if(i == n-1) {dp[i][j] = matrix[i][j]; continue ;}
+
+
+                //if(dp[i][j] != -1) return dp[i][j];
+
+                int left = INT_MAX;
+                if(i+1 < n && j-1 >=0) left = matrix[i][j]+ dp[i+1][j-1];
+
+                int right = INT_MAX;
+                if(i+1 <n && j+1 <n) right = matrix[i][j] + dp[i+1][j+1];
+
+                int center = INT_MAX;
+                if(i+1 <n)           center = matrix[i][j] +dp[i+1][j];
+
+                dp[i][j] = min(left,min(right,center));
             }
         }
         int ans = INT_MAX;
