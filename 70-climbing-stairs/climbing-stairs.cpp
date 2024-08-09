@@ -1,19 +1,20 @@
 class Solution {
 public:
-    int climbStairss(int n,vector<int>&dp) {
-        if(n == 1) return 1 ;
-        if(n == 2 ) return 2 ;
 
-        if(dp[n] != -1) return dp[n] ;
-        int leftcount = climbStairss(n-1,dp);
-        int rightcount = climbStairss(n-2,dp);
+    int climbdp(int ind , vector<int> &dp){
+        if(ind == 1) return 1 ;
+        if(ind == 2) return 2 ;
 
+        if(dp[ind] != -1) return dp[ind];
+        
+        int left = climbdp(ind-1,dp);
+        int right = climbdp(ind-2,dp);
 
-        return dp[n] = leftcount +rightcount;
+        return dp[ind] = left+ right ;
     }
-    int climbStairs(int n ){
-        vector<int>dp(n+1,-1);
-
-        return climbStairss(n,dp);
+    int climbStairs(int n) {
+        vector<int> dp(n+1,-1);
+        
+        return climbdp(n,dp);
     }
 };
