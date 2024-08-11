@@ -10,56 +10,35 @@
  * };
  */
 class Solution {
-private:
-    TreeNode* build(vector<int>& preorder, vector<int>& inorder,int ps,int pe,int is, int ie,unordered_map<int,int> &mp){
-        if(ps > pe || is > ie){
-            return NULL ;
-        }
+public:
 
+
+    TreeNode* build(vector<int>&preorder,vector<int>&inorder,int ps, int pe , int is , int ie, unordered_map<int,int>&inmap){
+
+        if(pe < ps || ie < is) return NULL ;
         TreeNode* root = new TreeNode(preorder[ps]);
 
-        int num = mp[preorder[ps]];
-        int count = num - is ;
+        int iend = inmap[preorder[ps]];
+        int diff = iend - is ;
 
-
-        root->left = build(preorder,inorder,ps+1, ps+count,is,num-1,mp);
-        root->right = build(preorder,inorder,ps+count+1, pe,num+1,ie,mp);
+        root->left = build(preorder,inorder,ps+1,ps+diff,is,iend-1,inmap);
+        root->right = build(preorder,inorder,ps+diff+1,pe,iend+1,ie,inmap);
 
         return root ;
     }
-public:
     TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int a = preorder.size();
-        int b = inorder.size();
-        unordered_map<int,int> mp ;
-        for(int i = 0 ; i<b ; i++){
-            mp[inorder[i]] = i ;
+        int n = preorder.size();
+        unordered_map<int,int>inmap;
+        for(int i =0 ; i < n ; i++){
+            inmap[inorder[i]] = i ;
         }
-        int ps = 0 ;
-        int pe = a-1 ;
+
+        int ps = 0 ; 
+        int pe = n-1 ;
         int is = 0 ;
-        int ie = a-1 ;
-        TreeNode* root = build(preorder,inorder,ps,pe,is,ie,mp);
+        int ie = n-1;
 
-        return root ;
+
+        return build(preorder,inorder,ps,pe,is,ie,inmap);
     }
-
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
