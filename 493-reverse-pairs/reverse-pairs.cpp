@@ -39,14 +39,26 @@ public:
         }
     }
 
-    int countPairs(vector<int> &arr, int low, int mid, int high) {
-        int right = mid + 1;
-        int cnt = 0;
-        for (int i = low; i <= mid; i++) {
-            while (right <= high && (long long)arr[i] > (long long)(2 * (long long)(arr[right]))) right++;
-            cnt += (right - (mid + 1));
+    // int countPairs(vector<int> &arr, int low, int mid, int high) {
+    //     int right = mid + 1;
+    //     int cnt = 0;
+    //     for (int i = low; i <= mid; i++) {
+    //         while (right <= high && (long long)arr[i] > (long long)(2 * (long long)(arr[right]))) right++;
+    //         cnt += (right - (mid + 1));
+    //     }
+    //     return cnt;
+    // }
+
+    int countPairs(vector<int> &arr, int low , int mid , int high){
+        //int left = low ; 
+        int right = mid+1;
+        int count = 0 ;
+        for(int i = low ; i <= mid ; i++){
+            while(right <= high && arr[i] > 2*(long long)arr[right]) right++;
+            count += right-(mid+1);
         }
-        return cnt;
+
+        return count ;
     }
 
     int mergeSort(vector<int> &arr, int low, int high) {
