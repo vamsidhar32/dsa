@@ -12,8 +12,8 @@ public:
             }
         }
         bouq = bouq+count/k;
-
         if(bouq >= m) return 1;
+
         return -1;
     }
     int minDays(vector<int>& bloomDay, int m, int k) {
