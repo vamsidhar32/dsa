@@ -47,8 +47,12 @@ public:
             prev->next = temp ;
             temp = prev ;
         }
+        ListNode* ret = dummy->next ;
 
-        return dummy->next ;
+        dummy->next == NULL;
+        delete dummy ;
+        
+        return ret ;
     }
 
 };
