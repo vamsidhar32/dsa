@@ -25,20 +25,12 @@ public:
             if(l1) sum += l1->val ;
             if(l2) sum += l2->val ;
 
-            if(sum > 9){
-                carry = 1; 
-                ListNode* temp = new ListNode(sum % 10);
-                prev->next = temp ;
-                prev = temp ;
-            }
 
-            else{
-                carry = 0 ;
-                ListNode* temp = new ListNode(sum %10);
-                prev->next = temp ;
-                prev = temp ;
-            }
+            ListNode* temp = new ListNode(sum % 10);
+            prev->next = temp ;
+            prev = temp ;
 
+            carry = (sum >9 ) ? 1 : 0 ;
             if(l1) l1 = l1->next ;
             if(l2) l2 = l2->next ;
         }
@@ -51,7 +43,7 @@ public:
 
         dummy->next == NULL;
         delete dummy ;
-        
+
         return ret ;
     }
 
