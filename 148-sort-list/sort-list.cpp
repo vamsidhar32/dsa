@@ -9,71 +9,62 @@
  * };
  */
 class Solution {
-
 public:
-    ListNode* middle(ListNode* head){
+    ListNode* func(ListNode* head){
         if(head == NULL || head->next == NULL) return head ;
-        ListNode* fast = head;
         ListNode* slow = head ;
+        ListNode* fast = head ;
         fast = fast->next->next ;
-        while(fast && fast->next){
+
+        while(fast&& fast->next){
             fast = fast->next->next ;
             slow = slow->next ;
         }
+
         return slow ;
     }
-    ListNode* merge(ListNode* sort1, ListNode* sort2){
-        ListNode* first = sort1;
-        ListNode* second = sort2;
-    if(first == NULL) return second ;
-    if(second == NULL) return first;
 
-    ListNode* dummy = new ListNode(-1);
+    ListNode* merged(ListNode* first , ListNode* second){
+        if(first == NULL) return second ;
+        if(second == NULL) return first ;
 
-    ListNode* prev = dummy ;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* prev = dummy ;
 
-    ListNode* l1 = first ;
-    ListNode* l2 = second; 
-
-    while(l1 && l2){
-        if(l1->val <= l2->val){
-            prev->next =l1 ;
-            prev = l1;
-            l1 = l1->next ;
+        while(first && second){
+            if(first->val <= second->val){
+                prev->next = first ;
+                prev = first ;
+                first = first->next ;
+            }
+            else if(second->val < first->val){
+                prev->next = second ;
+                prev = second ;
+                second = second->next ;
+            }
         }
-        else{
-            prev->next =l2 ;
-            prev = l2;
-            l2 = l2->next ;
-        }
-    }
 
-    if (l1) {
-        prev->next = l1;
-        prev = l1;
-    }
+        if(first) prev->next = first ;
+        if(second) prev->next = second ;
+        
+        ListNode* ret = dummy->next ;
 
-    if(l2){
-        prev->next = l2;
-        prev = l2;
-    }
 
-    return dummy->next;
+        dummy->next = NULL ;
+        delete dummy ;
 
+        return ret ;
     }
     ListNode* sortList(ListNode* head) {
         if(head == NULL || head->next == NULL) return head ;
 
-        ListNode* mid = middle(head);
-        ListNode* second = mid->next ;
-        mid->next = NULL ;
+        ListNode* middle = func(head);
+        ListNode* second = middle->next ;
+        middle->next = NULL ;
 
-        ListNode* sort1 = sortList(head);
-        ListNode* sort2 = sortList(second);
+        ListNode* fir = sortList(head);
+        ListNode* sec = sortList(second);
 
-        ListNode* merged = merge(sort1,sort2);
-
-        return merged;
+        return merged(fir,sec);
     }
-    
 };
