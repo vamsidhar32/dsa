@@ -10,59 +10,55 @@
  */
 class Solution {
 public:
-    ListNode* reversee(ListNode* head){
-        if(head == NULL || head->next == NULL) return head;
-        ListNode* prev =NULL;
-        ListNode* temp = head ;
 
+    ListNode* reversek(ListNode* rev){
+        ListNode* temp = rev ;
+        ListNode* prev = NULL ;
         while(temp){
-            ListNode* store = temp ;
-            temp = temp->next;
-            store->next = prev ;
-            prev = store ;
+            ListNode* curr = temp ;
+            temp = temp->next ;
+            curr->next = prev ;
+            prev = curr ;
         }
 
         return prev ;
     }
     ListNode* reverseKGroup(ListNode* head, int k) {
+
         if(head == NULL || head->next == NULL) return head ;
 
-        ListNode* temp = head;
-        int count = 0;
-        int flag = 0 ;
+        ListNode* temp = head ;
 
-        ListNode* prev = head;
-        ListNode* attach = new ListNode(-1) ;
-        ListNode* ret = attach;
+        int count = 0 ;
+        ListNode* rev = head ;
+        ListNode* dummy = new ListNode(-1);
+        ListNode* attach = dummy ;
 
         while(temp){
             count++;
+            if(count == k){
+                ListNode* curr = temp ;
+                temp = temp->next ;
+                curr->next = NULL ;
 
-            if(count == k ){
+                ListNode* prev = reversek(rev);
 
-                if(flag == 0) {head = temp; flag =1 ;}
+                attach->next = prev ;
+                attach = rev ;
 
-                ListNode* revhead = temp ;
-                temp = temp->next;
-                revhead->next = NULL ;
-                revhead = reversee(prev);
+                rev->next = temp ;
+                rev = temp ;
 
-                attach->next = revhead ;
-                attach = prev;
-
-                //prev->next = temp;
-                prev = temp ;
-
-                count = 0;
-                continue;
-
-                
+                count = 0 ;
+                continue ;
             }
+
             temp = temp->next ;
 
         }
-        attach->next = prev ;
 
-        return ret->next ;
+        return dummy->next;
+
+
     }
 };
