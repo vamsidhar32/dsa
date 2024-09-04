@@ -6,7 +6,6 @@ public:
         string conc = s+s ;
 
         if(conc.find(goal) == string :: npos) return false ;
-
-        return true;
+        return true ;
     }
 };
