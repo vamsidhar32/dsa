@@ -2,7 +2,7 @@ class Solution {
 public:
 
     int atmost(vector<int>&nums,int k){
-        if(k == -1) return 0 ;
+       // if(k == -1) return 0 ;
         int i = 0 ;
         int j = 0 ; 
         int n = nums.size();
