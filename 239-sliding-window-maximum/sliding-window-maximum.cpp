@@ -5,9 +5,7 @@ public:
         int j =0 ;
         deque<int>dq ;
         vector<int>ans ;
-        while(j < nums.size()){
-            
-            
+        while(j < nums.size()){        
             while(!dq.empty() && nums[j] > dq.back()){
                 dq.pop_back();
             }
