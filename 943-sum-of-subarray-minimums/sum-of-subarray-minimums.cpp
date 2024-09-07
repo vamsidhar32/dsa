@@ -9,7 +9,7 @@ public:
                 nsil.push_back(-1);
                 st.push({arr[i],i});
             }
-            else if(arr[i] > st.top().first){
+            else if(arr[i] >= st.top().first){
                 nsil.push_back(st.top().second);
                 st.push({arr[i],i});
             }
