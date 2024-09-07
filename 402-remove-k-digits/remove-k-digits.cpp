@@ -1,34 +1,32 @@
 class Solution {
 public:
-    std::string removeKdigits(std::string num, int k) {
-        std::stack<char> stack;
-        
-        for (char digit : num) {
-            while (!stack.empty() && k > 0 && stack.top() > digit) {
-                stack.pop();
+    string removeKdigits(string num, int k) {
+
+        stack<char>st;
+        for(int i =0 ; i < num.size() ; i++){
+            while(!st.empty() && num[i] < st.top() && k >0){
+                st.pop();
                 k--;
             }
-            stack.push(digit);
+            st.push(num[i]);
         }
-        
-        // Remove remaining k digits from the end of the stack
-        while (k > 0 && !stack.empty()) {
-            stack.pop();
+        while(k >0 && !st.empty()){
+            st.pop();
             k--;
         }
-        
-        // Construct the resulting string from the stack
-        std::string result;
-        while (!stack.empty()) {
-            result += stack.top();
-            stack.pop();
+
+        string ans = "";
+        while(!st.empty()){
+            ans += st.top();
+            st.pop();
         }
-        std::reverse(result.begin(), result.end()); // Reverse to get the correct order
+        reverse(ans.begin(),ans.end());
         
-        // Remove leading zeros
-        size_t pos = result.find_first_not_of('0');
-        result = (pos == std::string::npos) ? "0" : result.substr(pos);
-        
-        return result;
+        while( ans.size() > 1 && ans[0] == '0' ){
+            ans.erase(ans.begin());
+        }
+        if(ans == "") return "0";
+        return ans ;
+
     }
 };
