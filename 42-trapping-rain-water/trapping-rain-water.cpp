@@ -1,7 +1,7 @@
 class Solution {
 public:
 
-    void func1(vector<int> &ans ,vector<int> &heights){
+    void func10(vector<int> &ans ,vector<int> &heights){
         stack<int>st;
 
         for(int i =heights.size()-1 ; i>=0 ;i--){
@@ -27,7 +27,7 @@ public:
         reverse(ans.begin(),ans.end());
     }
 
-    void func2(vector<int>&ans,vector<int>heights){
+    void func20(vector<int>&ans,vector<int>heights){
 
         stack<int>st;
         for(int i = 0 ; i <heights.size(); i++){
@@ -38,7 +38,7 @@ public:
             }
             else if(heights[i] < st.top()){
                 ans.push_back(st.top());
-                //st.push(heights[i]);
+                //t.push(heights[i]);
             }
             else{
                 while(!st.empty() && heights[i] >= st.top()){
@@ -50,29 +50,47 @@ public:
             }
         }
     }
-    int trap(vector<int>& height) {
-        
-        vector<int>ngr;
-        vector<int>ngl;
-        func1(ngr,height);
-        func2(ngl,height);
 
-        // for(int i = 0 ;i<height.size(); i++){
-        //     cout<<ngr[i] << " " ;
-        // }
-        // cout <<endl;
-        // for(int i = 0 ;i<height.size(); i++){
-        //     cout<<ngl[i] << " " ;
-        // }
 
-        int ans = 0 ;
+    void func1(vector<int> &ngr , vector<int>&height){
+        int maxi = -1 ;
+        int n = height.size();
+        for(int i =n-1 ;i >= 0 ; i--){
+            ngr.push_back(maxi);
+            maxi = max(maxi,height[i]);
+        }
+        reverse(ngr.begin(),ngr.end());
+    }
 
-        for(int i = 0 ;i <height.size(); i++){
-            int k = min(ngl[i] ,ngr[i]);
-            if(k<0) continue ;
-            ans = ans + k - height[i];
+    void func2(vector<int> &ngl , vector<int>&height){
+        int maxi = -1 ;
+        int n = height.size();
+        for(int i = 0 ;i < n ; i++){
+            ngl.push_back(maxi);
+            maxi = max(maxi,height[i]);
         }
 
+        //return ngl;
+    }
+    int trap(vector<int>& height) {
+        int n = height.size();
+        int left = 0 ;
+        int right = n-1;
+        int leftmax = 0 ;
+        int maxright = 0 ;
+        int ans = 0 ;
+        while(left <= right){
+            if(height[left] <= height[right]){
+                if(leftmax - height[left] >=0 ) ans += leftmax - height[left];
+                leftmax = max(leftmax,height[left]);
+                left++;
+            }
+            else{
+                if(maxright - height[right] >=0 ) ans += maxright - height[right];
+                maxright = max(maxright, height[right]);
+                right--;
+            }
+        }
 
         return ans ;
     }
