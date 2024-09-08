@@ -11,22 +11,19 @@
  */
 class Solution {
 public:
-    bool issyym(TreeNode* root1,TreeNode* root2){
-        if(root1 == NULL || root2 == NULL) return root1 == root2;
+    bool issym(TreeNode* node1,TreeNode* node2){
+        if(node1 == NULL || node2 == NULL) return node1 == node2;
 
-        if(root1->val != root2->val) return false ;
-        bool left = issyym(root1->left,root2->right);
-        if(left == false )return false ;
-        bool right = issyym(root1->right,root2->left);
-        if(right == false ) return false ;
+        if(node1->val != node2->val) return false ;
+        bool left= issym(node1->left,node2->right);
+        if(left == false) return false ;
+        bool right = issym(node1->right, node2->left);
+        if(right == false) return false;
 
-        return true ;
+        return left && right ;
     }
     bool isSymmetric(TreeNode* root) {
-        if(root == NULL) return false;
-        if(root->left == NULL || root->right == NULL) return root->left == root->right ;
-        
-        bool k = issyym(root->left,root->right);
-        return k;
+        if(root == NULL) return true ;
+        return issym(root->left ,root->right);
     }
 };
