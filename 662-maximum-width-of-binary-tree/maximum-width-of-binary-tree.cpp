@@ -31,8 +31,8 @@ public:
                 if(i == size -1) last = value;
 
 
-                if(top.first->left) q.push({top.first->left,2LL*value+1});
-                if(top.first->right) q.push({top.first->right,2LL*value+2});
+                if(top.first->left) q.push({top.first->left,2*(long long)value+1});
+                if(top.first->right) q.push({top.first->right,2*(long long)value+2});
                 
                 
             }
