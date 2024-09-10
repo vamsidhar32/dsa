@@ -1,37 +1,44 @@
-#define ll long long
-#define pll pair<ll, ll>
 class Solution {
 public:
-    int MOD = 1e9 + 7;
+    typedef pair<long long, int> pi;  // Use long long for the distance
+    #define mod 1000000007
+    
     int countPaths(int n, vector<vector<int>>& roads) {
-        vector<vector<pll>> graph(n);
-        for(auto& road: roads) {
-            ll u = road[0], v = road[1], time = road[2];
-            graph[u].push_back({v, time});
-            graph[v].push_back({u, time});
+        vector<pair<int, int>> adj[n];
+
+        // Build adjacency list
+        for (auto& it : roads) {
+            adj[it[0]].push_back({it[1], it[2]});
+            adj[it[1]].push_back({it[0], it[2]});
         }
-        return dijkstra(graph, n, 0);
-    }
-    int dijkstra(const vector<vector<pll>>& graph, int n, int src) {
-        vector<ll> dist(n, LONG_MAX);
-        vector<ll> ways(n);
-        ways[src] = 1;
-        dist[src] = 0;
-        priority_queue<pll, vector<pll>, greater<>> minHeap;
-        minHeap.push({0, 0}); // dist, src
-        while (!minHeap.empty()) {
-            auto[d, u] = minHeap.top(); minHeap.pop();
-            if (d > dist[u]) continue; // Skip if `d` is not updated to latest version!
-            for(auto [v, time] : graph[u]) {
-                if (dist[v] > d + time) {
-                    dist[v] = d + time;
-                    ways[v] = ways[u];
-                    minHeap.push({dist[v], v});
-                } else if (dist[v] == d + time) {
-                    ways[v] = (ways[v] + ways[u]) % MOD;
+
+        vector<int> count(n, 0);
+        count[0] = 1;
+        
+        vector<long long> ans(n, 1e18);  // Use long long to store large distances
+        ans[0] = 0;
+
+        priority_queue<pi, vector<pi>, greater<pi>> pq; 
+        pq.push({0, 0});
+
+        while (!pq.empty()) {
+            auto [dist, node] = pq.top();
+            pq.pop();
+
+            for (auto& it : adj[node]) {
+                int v = it.first;
+                int wt = it.second;
+                
+                if (dist + wt < ans[v]) {
+                    ans[v] = dist + wt;
+                    pq.push({ans[v], v});
+                    count[v] = count[node] % mod;
+                } else if (dist + wt == ans[v]) {
+                    count[v] = (count[v] + count[node]) % mod;
                 }
             }
         }
-        return ways[n-1];
+
+        return count[n - 1];
     }
 };
