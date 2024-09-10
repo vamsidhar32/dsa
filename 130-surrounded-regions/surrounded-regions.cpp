@@ -2,6 +2,7 @@ class Solution {
 public:
 
     void dfs(int i , int j , vector<vector<char>>&grid,vector<int> &delrow,vector<int>&delcol){
+        if(grid[i][j] == 'v') return ;
         grid[i][j] = 'v' ;
         int n = grid.size();
         int m = grid[0].size();
