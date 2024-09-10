@@ -19,7 +19,7 @@ public:
         if(q.empty()) return 0 ;
         vector<int>delrow{0,0,-1,1};
         vector<int>delcol{-1,1,0,0};
-        int time = 0 ;
+        int time = -1 ;
         int count2 = 0 ;
         while(!q.empty()){
             int size = q.size();
@@ -46,6 +46,6 @@ public:
             }
         }
         if(count != count2) return -1 ;
-        return time-1;
+        return time;
     }
 };
