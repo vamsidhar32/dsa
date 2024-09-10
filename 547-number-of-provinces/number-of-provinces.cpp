@@ -1,12 +1,13 @@
 class Solution {
 public:
 
-    void dfs( int start , vector<int> adj[] , vector<int> &vis){
+    void dfs( int start , vector<vector<int>> isConnected , vector<int> &vis){
         vis[start] = 1 ;
 
-        for( auto it : adj[start]){
+        for(int it =0 ; it < isConnected.size(); it++){
+            if(isConnected[start][it] == 0) continue ;
             if(!vis[it]){
-                dfs(it,adj,vis);
+                dfs(it,isConnected,vis);
             }
         }
     }   
@@ -25,9 +26,9 @@ public:
 
         int count =0  ;
         vector<int> vis(n+1,0);
-        for(int i =1 ; i<=n ; i++){
+        for(int i =0 ; i<n ; i++){
             if(!vis[i]){
-                dfs(i,adj,vis);
+                dfs(i,isConnected,vis);
                 count++;
             }
         }
