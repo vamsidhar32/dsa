@@ -25,13 +25,13 @@ public:
 
         int count =0  ;
         vector<int> vis(n+1,0);
-        for(int i =0 ; i<=n ; i++){
+        for(int i =1 ; i<=n ; i++){
             if(!vis[i]){
                 dfs(i,adj,vis);
                 count++;
             }
         }
 
-        return count-1 ;
+        return count ;
     }
 };
