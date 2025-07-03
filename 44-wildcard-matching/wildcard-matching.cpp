@@ -1,61 +1,52 @@
+
+
 class Solution {
 public:
-
-    bool isdp(int i , int j , string p  , string s , vector<vector<int>>&dp){
-        
-        if(i<0 && j <0) return true ;
-        if(i<0 && j >=0) return false ;
-        if(j<0){
-            for(int j = 0 ; j <= i ; j++){
-                if(p[j] != '*') return false ;
-            }
-            return true ;
-        }
-
-        if(dp[i][j] != -1) return dp[i][j] ;
-
-        if(p[i] == s[j]) return dp[i][j] = isdp(i-1,j-1,p,s,dp); 
-        else if(p[i] == '?') return dp[i][j] = isdp(i-1,j-1,p,s,dp);
-        else if(p[i] == '*'){
-            return dp[i][j]  = isdp(i-1,j,p,s,dp) || isdp(i,j-1,p,s,dp);
-        }
-        else return false ;
-        
-    }
+    // ------------------------------------------------------------
+    // Returns true if pattern p matches the entire string s
+    // ------------------------------------------------------------
     bool isMatch(string s, string p) {
-        int n = p.size();
-        int m = s.size();
 
-        vector<vector<int>>dp(n+1,vector<int>(m+1,-1));
-        //return isdp(n-1,m-1,p,s,dp);
-        dp[0][0] = 1 ;
-        for(int j =1 ; j <=m; j++){
-            dp[0][j] = 0 ;
-        }
-        for(int i = 1 ; i <= n ; i++){
-            bool allStars = true; // Comment: Introduce a flag to check if all previous characters are '*'
-            for(int k = 0 ; k < i ; k++){ // Comment: Corrected the loop range from k = 0 to k < i
-                if(p[k] != '*') { // Comment: Fixed p[k] instead of p[k-1]
-                    allStars = false; // Comment: Reset flag if non-star character found
-                    break; // Comment: Exit loop early since we found a non-star character
-                }
+        size_t sIdx = 0;          // current index in s
+        size_t pIdx = 0;          // current index in p
+        size_t starIdx = string::npos; // position of last '*' in p, npos = not seen
+        size_t matchIdx = 0;      // position in s that corresponds to char right AFTER last '*'
+
+        // Walk through the string
+        while (sIdx < s.size()) {
+
+            // Case-1: current chars match, or pattern has '?'
+            if (pIdx < p.size() &&
+               (p[pIdx] == s[sIdx] || p[pIdx] == '?')) {
+                ++sIdx;           // consume one char from s
+                ++pIdx;           // ... and one from p
             }
-            if(allStars) dp[i][0] = 1 ; // Comment: Set dp[i][0] to 1 if all previous characters are '*'
-            else dp[i][0] = 0; // Comment: Otherwise, set dp[i][0] to 0
-        }
 
+            // Case-2: pattern char is '*'
+            else if (pIdx < p.size() && p[pIdx] == '*') {
+                starIdx = pIdx;   // remember where the '*'
+                matchIdx = sIdx;  // remember where in s the star may start matching
+                ++pIdx;           // treat '*' as matching zero chars for now
+            }
 
-        for(int i = 1 ; i <=n ; i++){
-            for(int j = 1 ; j <=m; j++){
-                if(p[i-1] == s[j-1])  dp[i][j] = dp[i-1][j-1];
-                else if(p[i-1] == '?')  dp[i][j] = dp[i-1][j-1];
-                else if(p[i-1] == '*'){
-                    dp[i][j]  = dp[i-1][j] || dp[i][j-1];
-                }
-                else dp[i][j] = 0 ;
+            // Case-3: mismatch BUT we have a previous '*' to fall back on
+            else if (starIdx != string::npos) {
+                pIdx = starIdx + 1; // reset pattern to char after '*'
+                ++matchIdx;         // let '*' absorb one more char
+                sIdx = matchIdx;    // retry matching from new sIdx
+            }
+
+            // Case-4: mismatch and NO previous '*' → impossible
+            else {
+                return false;     // no way to match
             }
         }
 
-        return dp[n][m];
+        // We finished the string; any remaining pattern chars must all be '*'
+        while (pIdx < p.size() && p[pIdx] == '*') {
+            ++pIdx;               // skip redundant '*' at the end
+        }
+
+        return pIdx == p.size();  // true only if pattern fully consumed
     }
 };
